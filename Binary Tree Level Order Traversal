@@ -1,0 +1,54 @@
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+
+
+Code: 
+typedef pair<TreeNode*, int> pairs;
+    
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        
+        
+        vector<vector<int>> results; 
+        
+        if (root == NULL){
+            return results; 
+        }
+        
+        queue<pairs> nodes;
+        pairs p; 
+        int prev = 0; 
+        vector<int> v; 
+        
+        
+        nodes.push(make_pair(root, prev)); 
+        
+        
+        while(!nodes.empty()){
+            p = nodes.front(); 
+            
+            if(p.first->left != NULL){
+                nodes.push(make_pair(p.first->left,p.second+1)); 
+            }
+            
+            if(p.first->right != NULL){
+                nodes.push(make_pair(p.first->right,p.second+1)); 
+            }
+            
+            if(p.second == prev){
+                v.push_back(p.first->val); 
+            }
+            else{
+                results.push_back(v); 
+                v.clear(); 
+                v.push_back(p.first->val); 
+                prev = p.second; 
+                
+            }
+            
+            nodes.pop(); 
+        }
+                        
+                        results.push_back(v); 
+                        return results; 
+        
+    }
