@@ -7,23 +7,16 @@ The right subtree of a node contains only nodes with keys greater than the node'
 Both the left and right subtrees must also be binary search trees.
 
 Code:
-    bool isValidBST(TreeNode* root) {
-        
+     bool validate(TreeNode *root, int *max,int *min){
         if(root == NULL){
-            return true; 
+            return true;
+        }else if(max!=NULL && root->val>= *max || min!=NULL && root->val <= *min){
+            return false;
+        }else{
+            return validate(root->left,&(root->val),min) && validate(root->right,max,&(root->val));
         }
-        
-        if(root->left != NULL && root->left->val >=  root->val)
-            return false; 
-        
-        if(root->right != NULL && root->right-> val <= root->val )
-            return false; 
-        
-        if(!isValidBST(root->right) && !isValidBST(root->left))
-            return false; 
-            
-       
-        return 1; 
-        
-        
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        return validate(root,NULL,NULL);
     }
