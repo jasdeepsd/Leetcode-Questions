@@ -1,0 +1,70 @@
+Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
+
+Return the sum of the three integers.
+
+You may assume that each input would have exactly one solution.
+
+
+Code:
+   int threeSumClosest(vector<int>& nums, int target) {
+        int sumClosest = 0;
+        int sums =0; 
+        int diff =0; 
+        int x =INT_MAX; 
+        for(int i =0; i< nums.size(); i++){
+            sums = nums[i]; 
+            for(int j =i+1; j< nums.size(); j++){
+                sums += nums[j]; 
+                for(int q =j+1; q< nums.size(); q++){
+                    sums += nums[q];
+                    diff = abs(target-sums);
+                    if( diff < x){
+                        sumClosest = sums; 
+                        x =diff; 
+                     }
+                    sums -= nums[q];
+                }  
+                sums -= nums[j]; 
+            }
+             
+        }
+        return sumClosest; 
+        
+    }
+
+code: efficient using 2 pointer
+    int threeSumClosest(vector<int>& nums, int target) {
+        
+        sort(nums.begin(), nums.end()); 
+        int n = nums.size(); 
+        int mn = INT_MAX; 
+        int closest; 
+        
+        for(int i=0; i<= n-3; i++){
+            int l = i+1; 
+            int r = n-1;
+            
+            while(l < r){
+                int a = nums[l]; 
+                int b = nums[r]; 
+                
+                if(abs(a+b+nums[i] - target) < mn){
+                    mn = abs(a+b+nums[i] - target); 
+                    closest = a+b+nums[i]; 
+                }
+                
+                if(a+b+nums[i] < target )
+                    l++; 
+                else if(a+b+nums[i] > target)
+                    r--; 
+                else if(a+b+nums[i] == target )
+                    return a+b+nums[i]; 
+            }
+            
+        }
+       
+   
+        return closest; 
+        
+    }
+    O(n^2)
