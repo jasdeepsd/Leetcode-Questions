@@ -1,0 +1,45 @@
+Given the head of a singly linked list, return true if it is a palindrome.
+
+
+Code:
+    bool isPalindrome(ListNode* head) {
+        ListNode* list1 =head; 
+        ListNode* list2=head; 
+        
+        while(list2 != NULL && list2->next != NULL){
+            list1 = list1->next; 
+            list2= list2->next->next; 
+        }
+        
+        list1 = reverseList(list1); 
+        list2 = head; 
+        
+        while(list1){
+            if(list1->val != list2->val){
+                return false; 
+            }
+            
+            list1= list1->next; 
+            list2 = list2->next; 
+        }
+        
+        return true; 
+        
+    }
+    
+    ListNode* reverseList(ListNode* node){
+        ListNode* prev = NULL; 
+        ListNode* next = NULL; 
+        ListNode* current = node; 
+        
+        while(current != NULL){
+            next = current->next; 
+            current->next = prev; 
+            prev = current; 
+            current = next;             
+        }
+        
+        node = prev; 
+        
+        return node; 
+    }
