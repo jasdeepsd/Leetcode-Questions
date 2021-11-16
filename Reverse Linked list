@@ -1,0 +1,20 @@
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+
+
+Code:
+
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = NULL;
+        ListNode* next; 
+        ListNode* current = head; 
+        
+        while(current != NULL){
+            next = current->next; 
+            current->next = prev; 
+            prev = current; 
+            current = next; 
+        }
+        head = prev; 
+        return head; 
+    }
