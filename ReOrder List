@@ -1,0 +1,56 @@
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+
+
+Code:
+    void reorderList(ListNode* head) {
+    ListNode* slow=head;
+        ListNode* fast=head->next;
+        ListNode* mid=head;
+        
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+            mid=mid->next;
+        }
+        slow=slow->next;
+        mid->next=NULL;
+      
+        slow=reverseList(slow);
+        
+        fast=head;
+        
+        while(slow!=NULL){
+            ListNode* curr=fast->next;
+            ListNode* curr1=slow->next;
+            fast->next=slow;
+            fast=curr;
+            slow->next=curr;
+            slow=curr1;
+        }
+        
+    
+        
+        
+    }
+    
+    ListNode* reverseList(ListNode* node){
+        ListNode* prev = NULL; 
+        ListNode* next = NULL; 
+        ListNode* current = node; 
+        
+        while(current){
+            next = current->next; 
+            current->next = prev; 
+            prev = current; 
+            current = next; 
+        }
+        
+        return prev; 
+        
+        
+    }
